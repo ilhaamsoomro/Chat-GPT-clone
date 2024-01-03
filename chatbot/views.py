@@ -4,10 +4,13 @@ import openai
 
 from django.contrib import auth
 from django.contrib.auth.models import User
+from .models import Chat
+
+from django.utils import timezone
 
 # Create your views here.
 
-openai_api_key = 'Your API key here'    #redacted for privacy
+openai_api_key = 'Your API Key Here'    #redacted for privacy
 openai.api_key = openai_api_key
 
 def ask_openai(message):
@@ -29,11 +32,16 @@ def ask_openai(message):
     return answer
 
 def chatbot(request):
+    chats = Chat.objects.filter(user = request.user)
+
     if request.method == 'POST':
         message = request.POST.get('message')
         response = ask_openai(message)
+
+        chat = Chat(user=request.user, message=message, response=response, created_at=timezone.now())
+        chat.save()
         return JsonResponse({'message': message, 'response' : response})
-    return render(request, 'chatbot.html')
+    return render(request, 'chatbot.html', {'chats': chats})
 
 def login(request):
     if request.method == 'POST':
