@@ -4,20 +4,25 @@ import openai
 
 # Create your views here.
 
-openai_api_key = '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'
+openai_api_key = 'Your OpenAi API key' #redacted for privacy
 openai.api_key = openai_api_key
 
 def ask_openai(message):
-    response = openai.Completion.create(
-        model = "text-davinci-003",
-        prompt = message,
-        max_tokens = 30,
-        n=1,
-        stop=None,
-        temperature=0.7
+    response = openai.ChatCompletion.create(
+        model = "gpt-3.5-turbo",
+        messages = [
+            {"role" : "system", "content" : "You are a helpful assistant."},
+            {"role" : "user", "content" : message},
+        ],
+        # prompt = message,
+        max_tokens = 10,
+        # n=1,
+        # stop=None,
+        # temperature=0.2
     )
-
-    answer = response.choices[0].text.strip()
+    print(response)
+    #answer = response.choices[0].text.strip()
+    answer = response.choices[0].message.content.strip()
     return answer
 
 def chatbot(request):
