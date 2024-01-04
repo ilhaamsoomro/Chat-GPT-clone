@@ -17,22 +17,23 @@ Welcome to the ChatGPT Clone, a web application built with Django that utilizes 
    ```
 
 3. **Set Up Environment Variables:**
+   ```bash
    Locate the SECRET_KEY variable in your settings.py file and replace its value with the new secret key.
      SECRET_KEY=your_secret_key
    OPENAI_API_KEY=your_openai_api_key
    ```
 
-4. **Apply Migrations:**
+5. **Apply Migrations:**
    ```bash
    python manage.py migrate
    ```
 
-5. **Run the Development Server:**
+6. **Run the Development Server:**
    ```bash
    python manage.py runserver
    ```
 
-6. **Access the Application:**
+7. **Access the Application:**
    Visit `http://127.0.0.1:8000/` in your web browser.
 
 ## User Registration and Authentication
